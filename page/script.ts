@@ -114,16 +114,15 @@ class Row {
                     Password: (this.domNode.querySelector('input[name="Password"]')! as HTMLInputElement).value,
                 };
 
-                let good = true;
+                let good = false;
                 for (const key in user) {
                     const node = this.domNode.querySelector(`input[name="${key}"]`);
 
                     if (node == null)
                         continue;
 
-                    if (!(node as HTMLInputElement).value?.trim()) {
-                        flash(node as HTMLInputElement);
-                        good = false;
+                    if ((node as HTMLInputElement).value?.trim()) {
+                        good = true;
                     }
                 }
 

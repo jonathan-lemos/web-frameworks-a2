@@ -87,14 +87,13 @@ class Row {
                     EmailAddress: this.domNode.querySelector('input[name="EmailAddress"]').value,
                     Password: this.domNode.querySelector('input[name="Password"]').value,
                 };
-                let good = true;
+                let good = false;
                 for (const key in user) {
                     const node = this.domNode.querySelector(`input[name="${key}"]`);
                     if (node == null)
                         continue;
-                    if (!((_a = node.value) === null || _a === void 0 ? void 0 : _a.trim())) {
-                        flash(node);
-                        good = false;
+                    if ((_a = node.value) === null || _a === void 0 ? void 0 : _a.trim()) {
+                        good = true;
                     }
                 }
                 if (good) {
