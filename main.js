@@ -39,8 +39,15 @@ var error = function (msg) {
 var ok = function (msg) {
     return { "status": "ok", "message": msg };
 };
+var s = function (s) {
+    if (typeof s === "string" && s.trim()) {
+        return s.trim();
+    }
+    return "";
+};
 var app = express_1["default"]();
 app.use(express_1["default"].json());
+app.use(express_1["default"].urlencoded({ extended: false }));
 app.use(express_1["default"].static("page"));
 app.get("/", function (req, res) {
     var text = fs_1["default"].readFileSync("page/index.html");
@@ -52,11 +59,11 @@ app.get("/Users", function (req, res) {
 });
 app.post("/User", function (req, res) {
     var b = req.body;
-    if (typeof b.UserID !== "string" ||
-        typeof b.FirstName !== "string" ||
-        typeof b.LastName !== "string" ||
-        typeof b.EmailAddress !== "string" ||
-        typeof b.Password !== "string") {
+    if (!((b.UserID = s(b.UserID)) &&
+        (b.FirstName = s(b.FirstName)) &&
+        (b.LastName = s(b.LastName)) &&
+        (b.EmailAddress = s(b.EmailAddress)) &&
+        (b.Password = s(b.Password)))) {
         res.status(400);
         res.json(error("The post body must have 'UserID', 'FirstName' and 'LastName' entries."));
         return;
@@ -100,17 +107,17 @@ app.patch("/User/:id", function (req, res) {
         return;
     }
     var user = users[0];
-    if (typeof req.body.FirstName === "string") {
-        user.FirstName = req.body.FirstName;
+    if (s(req.body.FirstName)) {
+        user.FirstName = s(req.body.FirstName);
     }
-    if (typeof req.body.LastName === "string") {
-        user.LastName = req.body.LastName;
+    if (s(req.body.LastName)) {
+        user.LastName = s(req.body.LastName);
     }
-    if (typeof req.body.EmailAddress === "string") {
-        user.EmailAddress = req.body.EmailAddress;
+    if (s(req.body.EmailAddress)) {
+        user.EmailAddress = s(req.body.EmailAddress);
     }
-    if (typeof req.body.Password === "string") {
-        user.Password = req.body.Password;
+    if (s(req.body.Password)) {
+        user.Password = s(req.body.Password);
     }
     writeUsers(oldUsers.filter(function (x) { return x.UserID !== req.params.id; }).concat([user]));
     res.json(ok("User " + req.params.id + " has been updated."));
@@ -138,3 +145,4 @@ app.use(function (req, res) {
 });
 console.log("Express listening on port 3000");
 app.listen(3000);
+//# sourceMappingURL=main.js.map

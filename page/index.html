@@ -65,7 +65,7 @@
                 <tr>
                     <td><code>/User</code></td>
                     <td>POST</td>
-                    <td>Creates a user. The <code>Content-Type</code> must be <code>application/json</code>
+                    <td>Creates a user. The <code>Content-Type</code> must be <code>application/json</code> or <code>application/x-www-form-urlencoded</code>
                         and the body object must have keys
                         <code>UserID</code>, <code>FirstName</code>, <code>LastName</code>, <code>EmailAddress</code>, and <code>Password</code>.
                         You cannot create a user with a <code>UserID</code> that already exists. The API will return a JSON response indicating success or failure.
@@ -80,9 +80,9 @@
                 <tr>
                     <td><code>/User/{id}</code></td>
                     <td>PATCH</td>
-                    <td>Updates a user's info. The <code>Content-Type</code> must be <code>application/json</code>
-                        and the body object can have keys
-                        <code>FirstName</code>, <code>LastName</code>, <code>EmailAddress</code>, and <code>Password</code>.
+                    <td>Updates a user's info. The <code>Content-Type</code> must be <code>application/json</code> or <code>application/x-www-form-urlencoded</code>
+                        and the body can have keys
+                        <code>FirstName</code>, <code>LastName</code>, <code>EmailAddress</code>, and/or <code>Password</code>.
                         You must update a user with a <code>UserID</code> that already exists. The API will return a JSON response indicating success or failure.
                     </td>
                 </tr>

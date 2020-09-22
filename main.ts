@@ -47,9 +47,17 @@ const ok = (msg?: string) => {
     return {"status": "ok", "message": msg};
 }
 
+const s = (s: any): string => {
+    if (typeof s === "string" && s.trim()) {
+        return s.trim();
+    }
+    return "";
+}
+
 const app = express();
 
 app.use(express.json());
+app.use(express.urlencoded({extended: false}));
 app.use(express.static("page"));
 
 app.get("/", (req, res) => {
@@ -65,11 +73,11 @@ app.get("/Users", (req, res) => {
 app.post("/User", (req, res) => {
     const b = req.body;
 
-    if (typeof b.UserID !== "string" ||
-    typeof b.FirstName !== "string" ||
-    typeof b.LastName !== "string" ||
-    typeof b.EmailAddress !== "string" ||
-    typeof b.Password !== "string") {
+    if (!((b.UserID = s(b.UserID)) &&
+    (b.FirstName = s(b.FirstName)) &&
+    (b.LastName = s(b.LastName)) &&
+    (b.EmailAddress = s(b.EmailAddress)) &&
+    (b.Password = s(b.Password)))) {
         res.status(400);
         res.json(error("The post body must have 'UserID', 'FirstName' and 'LastName' entries."));
         return;
@@ -123,20 +131,20 @@ app.patch("/User/:id", (req, res) => {
 
     const user = users[0];
 
-    if (typeof req.body.FirstName === "string") {
-        user.FirstName = req.body.FirstName;
+    if (s(req.body.FirstName)) {
+        user.FirstName = s(req.body.FirstName);
     }
 
-    if (typeof req.body.LastName === "string") {
-        user.LastName = req.body.LastName;
+    if (s(req.body.LastName)) {
+        user.LastName = s(req.body.LastName);
     }
 
-    if (typeof req.body.EmailAddress === "string") {
-        user.EmailAddress = req.body.EmailAddress;
+    if (s(req.body.EmailAddress)) {
+        user.EmailAddress = s(req.body.EmailAddress);
     }
 
-    if (typeof req.body.Password === "string") {
-        user.Password = req.body.Password;
+    if (s(req.body.Password)) {
+        user.Password = s(req.body.Password);
     }
 
     writeUsers(oldUsers.filter(x => x.UserID !== req.params.id).concat([user]));

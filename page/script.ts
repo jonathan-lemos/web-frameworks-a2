@@ -232,6 +232,7 @@ const renderRows = async () => {
 
     if (good) {
         console.log(await ajaxJson(`/User`, "POST", user));
+        row.querySelectorAll("input").forEach(x => x.value = "");
         await renderRows();
     }
 };
