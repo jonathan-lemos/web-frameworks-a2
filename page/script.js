@@ -190,3 +190,4 @@ byId("new-user").querySelector("button.green").onclick = async () => {
     }
 };
 renderRows();
+//# sourceMappingURL=script.js.map

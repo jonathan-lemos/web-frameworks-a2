@@ -5,8 +5,8 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc page/script.ts --target es2019 && tsc main.ts --esModuleInterop --sourceMap",
-	"start": "node main.js"
+    "build": "tsc page/script.ts --sourceMap --target es2019 && tsc main.ts --esModuleInterop --sourceMap",
+    "start": "node main.js"
   },
   "repository": {
     "type": "git",
